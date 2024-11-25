@@ -25,11 +25,15 @@ app.get('/users', async(req, res)=>{
 });
 
 app.post('/users', async(req, res)=>{
+
+    console.log(req.body);
+    
+
     let db;
     try {
-        const {email,nombre}=req.body;
+        const {nombre, contrasena, apellido, correo} = req.body;
         db = await connect();
-        const query =`INSERT INTO usuarios(nombre, email)VALUES('${nombre}','${email}')`;
+        const query =`INSERT INTO usuarios(nombre, apellido, correo, contrasena)VALUES('${nombre}','${apellido}','${correo}','${contrasena}')`;
         const [row] =await db.execute(query);
         console.log(row);
         res.json({
@@ -60,12 +64,14 @@ app.get('/users/:email', async (req, res)=>{
 
 app.delete('/users/:email', async (req,res)=>{
     const email =req.params.email;
+    console.log(email);
+
     let db;
     try {
         db = await connect();
         const query = 'DELETE FROM usuarios WHERE email = ?';
         const [row]= await db.execute(query, [email]);
-        if(row.affectedRows == 0) {
+        if(row.affectedRows === 0) {
             res.json({
                 'users': [],
                 'status': 404,
@@ -91,7 +97,7 @@ app.put('/users/:email', async (req, res)=>{
         db = await connect();
         const query = 'UPDATE usuarios SET nombre = ? where email = ?';
         const [row]= await db.execute(query, [nombre, email]);
-        if(row.affectedRows == 0) {
+        if(row.affectedRows === 0) {
             res.json({
                 'users': [],
                 'status': 404,
