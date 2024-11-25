@@ -4,9 +4,9 @@ async function connect() {
     try{
         const HOST='localhost';
         const PORT =3306;
-        const USER = 'root';
+        const USER = 'root';    
         const PASS ='BoomerCff196';
-        const DATABASE ='BANCA_MOVIL';
+        const DATABASE ='banco_app';
 
         const conn = await mysql.createConnection({
             'host': HOST,
